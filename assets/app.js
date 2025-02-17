@@ -1,3 +1,4 @@
+import './bootstrap.js';
 import "./bootstrap.js";
 import CanvasConfetti from "canvas-confetti";
 /*
