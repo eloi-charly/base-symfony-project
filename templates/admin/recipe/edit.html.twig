@@ -1,0 +1,13 @@
+{% extends "admin/admin.html.twig" %}
+
+
+{% block title "Recette : " ~ recipe.slug %}
+{% block body %}
+	<h1>{{ recipe.title }}</h1>
+	<turbo-frame id="recipe_{{recipe.id }}">
+
+		{{ form(form, { action: path('admin.recipe.edit',{ id: recipe.id})}) }}
+
+
+		</turbo-frame>
+	{% endblock %}

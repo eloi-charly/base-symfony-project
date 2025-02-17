@@ -1,0 +1,60 @@
+{% extends "admin/admin.html.twig" %}
+
+
+{% block title "Tous les recettes " %}
+{% block body %}
+<h1>Les recettes
+</h1>
+
+<a href="{{ path('admin.recipe.create') }}" class="btn btn-info">Créer une nouvelle recette</a>
+
+<div id="flash"></div>
+<table class="table ">
+	<thead>
+		<tr>
+			<th>{{ knp_pagination_sortable(recipes, 'ID','r.id' ) }}</th>
+			<th>{{ knp_pagination_sortable(recipes, 'Titre','r.title') }}</th>
+			<th>Image</th>
+			<th>Catégorie</th>
+			<th style="width: 200px">Action</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		{% for recipe in recipes %}
+			<tr id="row_recipe_{{ recipe.id}}">
+				<td>{{ recipe.id }}
+				</td>
+				<td class="">
+					<turbo-frame id="recipe_{{recipe.id }}">
+						<a href="{{ path('admin.recipe.edit',{ id : recipe.id }) }}">
+							{{ recipe.title}}
+						</a>
+					</turbo-frame>
+				</td>
+				<td>
+					<img width="70" src="{{ vich_uploader_asset(recipe, 'thumbnailFile') }}" alt="{{ recipe.title }}">
+
+
+				</td>
+				<td>
+
+					{{ recipe.category.name | default("") }}
+				</td>
+				<td class="d-flex gap-1">
+
+					<a href="{{ path('admin.recipe.edit',{ id : recipe.id}) }}" class="btn btn-sm btn-primary">
+						Editer
+					</a>
+					<form action="{{ path('admin.recipe.delete', { id : recipe.id}) }}" method="POST">
+						<input type="hidden" name="_method" value="DELETE">
+						<button type="submit" class=" btn btn-danger btn-sm">
+							Supprimer
+						</button>
+					</form>
+				</td>
+
+			</tr>
+		</td>
+	</tbody>
+</tr>{% endfor %}</tbody></table>{{ knp_pagination_render(recipes) }}{% endblock %}

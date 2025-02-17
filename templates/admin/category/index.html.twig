@@ -1,0 +1,43 @@
+{% extends "admin/admin.html.twig" %}
+
+{% block title "Les catégories " %}
+
+{% block body %}
+	<h2>Les categories
+	</h2>
+	<div class="my-2">
+
+		<a href="{{ path('admin.category.create') }}" class="btn btn-primary">Créer un catégorie</a>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{{ knp_pagination_sortable(categories, 'Nom', 'c.name') }}</th>
+				<th>Nom</th>
+				<th>Recettes</th>
+
+				{# <th style="width: 200px">Actions</th> #}
+			</tr>
+		</thead>
+		<tbody>
+			{% for category in categories %}
+				<tr>
+					<td>{{ category.name }}</td>
+					<td>{{ category.count }}</td>
+					<td class="d-flex gap-2">
+						<a href="{{ path('admin.category.edit',{ id: category.id }) }}" class="btn btn-primary btn-sm">Editer</a>
+
+						<form action="{{ path('admin.category.delete', { id : category.id}) }}" method="POST">
+							<input type="hidden" name="_method" value="DELETE">
+							<button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+						</form>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div>
+		{# {{ knp_pagination_render(categories) }} #}
+	</div>
+
+{% endblock %}
